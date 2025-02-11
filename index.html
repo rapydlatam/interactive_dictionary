@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diccionario Interactivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #002124 0%, #F9DD4B 140%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+      position: relative; /* Necesario para posicionar el logo */
+    }
+
+    /* Estilo para el logo en la esquina superior izquierda */
+    #logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 120px; /* Tamaño moderado, ajusta según sea necesario */
+      height: auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Caja de búsqueda */
+    input {
+      padding: 12px 20px;
+      width: 350px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      margin-bottom: 30px;
+      outline: none;
+      background-color: #fff;
+      color: #333;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input:focus {
+      border: 2px solid #3498db;
+      box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+    }
+
+    /* Contenedor de la tabla */
+    .table-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-height: 500px; /* Añadido para evitar que la tabla crezca sin control */
+      overflow-y: auto; /* Permite el desplazamiento vertical */
+    }
+
+    /* Tabla */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      animation: fadeIn 1s ease-out;
+    }
+
+    th, td {
+      padding: 15px 25px;
+      text-align: left;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    th {
+      background-color: #002124;
+      color: #fff;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    td {
+      background-color: #fff;
+      color: #333;
+      font-weight: 400;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+      cursor: pointer;
+      transform: scale(1.02);
+      transition: transform 0.2s ease;
+    }
+
+    /* Mensaje de no resultados */
+    .no-results {
+      font-size: 1.2rem;
+      color: #e74c3c;
+      padding: 20px;
+    }
+
+    /* Animación de entrada */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mensaje emergente de "No resultados" */
+    .no-results {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Logo en la esquina superior izquierda -->
+  <img id="logo" src="https://i.postimg.cc/sX2dpZkt/PAYU-GPO-white.png" alt="Logo">
+
+  <div class="content">
+    <h1>Diccionario Interactivo</h1>
+
+    <!-- Caja de búsqueda -->
+    <input type="text" id="search" placeholder="Escribe un concepto..." onkeyup="filterTable()">
+
+    <!-- Contenedor de la tabla -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>Definición</th>
+          </tr>
+        </thead>
+        <tbody id="dictionary">
+          <!-- Aquí se cargará el contenido dinámico -->
+        </tbody>
+      </table>
+      <div class="no-results" id="noResultsMessage">No se encontraron resultados.</div>
+    </div>
+  </div>
+
+  <script>
+    // Datos del diccionario (contenido del archivo .txt embeber dentro de una variable)
+    const data = `
+    
+    Beneficiario final (UBO) (Ultimate Beneficial Owner) | Es aquella persona natural que posee o controla, de forma directa o indirecta, a una persona jurídica. El Carácter de UBO se asigna de acuerdo con la normativa local de cada jurisdicción en la que opera el Comercio;
+CRP (Customer Related Person) | Son las personas relacionadas al Comercio. Son el representante legal tanto principal como suplente, apoderado (si aplica), miembros de la junta directiva (si tiene), revisor fiscal (si aplica), los accionistas y UBOs del Comercio;
+LA/FT-FPADM | Lavado de Activos, Financiación del Terrorismo y Financiación de la Proliferación de Armas de Destrucción Masiva;
+PEP: (Political Exposed Persons) | Son servidores públicos de cualquier sistema de nomenclatura y clasificación de empleos de la administración pública nacional y territorial, cuando tengan asignadas o delegadas funciones de: expedición de normas o regulaciones, dirección general, formulación de políticas institucionales y adopción de planes, programas y proyectos, manejo directo de bienes, dineros o valores del Estado entre otros.;
+TOP LINE/REVENUE | El dinero que ganamos vendiendo servicios de pago a nuestros clientes;
+TPV (Total,Processing Volume) | Volumen transaccional procesado,Es la estimación de ventas del Comercio, es decir la cantidad de dinero que transacciona a través de PayU.;
+Prensa Adversa | Noticias negativas relacionadas con los Comercios o sus CRPs;
+Listas Restrictivas | Son aquellas listas de personas y entidades asociadas con organizaciones terroristas. Adicional a las listas vinculantes normativamente, otras listas internacionales y nacionales que agrupan información, reportes y antecedentes que permiten a PayU realizar una evaluación con enfoque basado en riesgo apropiada respecto de sus Contrapartes.;
+NDX (Non Delibery Risk Exposure) | Es el riesgo crediticio por la no entrega de los productos y/o servicios ;
+ADD (Avergae Delivery Days) | Días promedio de entrega de los servicios/productos del comercio ;
+TSP (Technical Service Provider) | Modelo TSP o Gateway,se define por el tipo de servicio  acuerdo en el que PayU funciona únicamente como plataforma técnica, intermediando en línea transacciones para sus Comerciantes o para sus Adquirentes.;
+GRC (Generic Risk Case ) | Casos de riesgo genéricos, no son casos estándar, son atados a una oportunidad y a una cuenta;
+MROC ( Merchant Risk Oversight Committees) | Comité de supervisión de riesgos comerciales;
+MCC (Merchant Category Code) | El MCC es un numero de cuatro digitos que clasifica a las empresas por el tipo de productos o servicios que ofrecen;
+Queue | Bandeja de asignación en donde llegan todos los casos;
+KYC (Know Your Client) | Es un proceso que se realiza para verificar la identidad de los clientes y recopilar informacion sobre ellos.;
+GPO (Global Payment Organization) | Organización de pagos global que incluye dos Regiones EMEA y LATAM;
+AML (Anti-Money Laundering) | Se refiere a un conjunto de leyes, regulaciones y procedimientos diseñados para prevenir el lavado de dinero, es decir, el proceso mediante el cual se intenta disimular el origen ilícito de fondos obtenidos a través de actividades delictivas, como el tráfico de drogas, la corrupción o el fraude.;
+KPI ( Key Performance Indicator) | Se trata de una medida cuantitativa que se utiliza para evaluar el progreso de una empresa hacia sus objetivos;
+Card TPV | Volumen de procesamiento de transacciones en productos de tarjetas;
+URL(Uniform Resource Locator) | Link de Pagina Web o Red Social  para la validacion de los productos y/o servicios.;
+Politica de Entrega (Delivery Policy) | Describe los plazos estimados de entrega de los productos / servicios;
+Desglose de Ventas (Sales Breakdown) | Una lista de todos los productos / servicios ofrecidos por el comerciante con su % de ventas por categoría mensualmente;
+MRC | Matriz Riesgo Cliente;
+MODELO PSP (Payment Service Provider) | Modelo Agregator, es aquel mediante el cual PayU le habilita al Comercio, la recepción del pago de las compras presenciales o no presenciales que le hacen sus clientes poniendo a su disposición distintos medios de pagos. PayU recauda el dinero resultante de esas compras en cuentas bancarias de PayU, y luego remite el dinero a la cuenta bancaria del Comercio.;
+Global Pricing Calculator | Calculadora Global;
+Opportunity Owner | Dueño de la oportunidad (Comercial);
+Pricing Summary | "Resumen de cálculo" se muestra el precio de forma simplificada con notas adicionales sobre la oferta que se le hará el comercio;
+Tiers Template | Propuesta de precios escalonados;
+Payment Channel | Medios de pagos;
+Processing Fee | Es un cargo porcentual al comercio sobre el valor de la transacción procesada;
+Fixed Fee | Es un valor fijo que se cobra al comercio por cada transacción procesada;
+Minimun Fee | Es un valor fijo que se cobra al comerciante por cada transacción procesada cuando la suma de la tarifa de procesamiento y la tarifa fija es menor o igual a esta tarifa mínima;
+Admin PayU | Sistema interno que permite la parametrización de las cuentas de los Comercios PayU.;
+Salesforce (SF) | Software para la administración y gestión de la información de los Comercios;
+E-Spears | Herramienta suministrada por proveedores externos para verificar si los comercios están incluidos en listas restrictivas tales como las emitidas por el Consejo de Seguridad de la ONU la Unión Europea o la OFAC;
+SharePoint | Herramienta para la gestión documental de la organización, que le permite a los integrantes del equipo de riesgo operacional el almacenamiento, organización y visualización de información que relevante para los integrantes de la compañía.;
+Comercio Gerenciado o Comercio | Se denominan comercios gerenciados ya que son clientes que cuentan con acompañamiento del equipo Comercial durante su vinculación, y durante toda la relación comercial con PayU.;
+DDC | Debida Diligencia Continuada;
+DDE | Debida Diligencia Estándar;
+DDR | Debida Diligencia Reforzada;
+DDS | Debida Diligencia Simplificada;
+Black List (Lista Negra) | La lista negra interna de PayU es una base de datos que incluye a todos los comercios que han sido rechazados. También incluye aquellos comercios que causaron pérdidas financieras o de reputación a la compañía, o cuya relación fue terminada por violación de las políticas internas de PayU;
+Partes Relacionadas | Son el representante legal, los directores, los accionistas y el UBO de un Comercio.;
+Prensa Adversa | Es la búsqueda que se hace del Comercio y de sus Partes Relacionadas para identificar si existe prensa adversa en su contra.;
+Sujeto de la alerta | Es la persona natural o jurídica que se consulta en E-Spear y del cual resulta alguna coincidencia. Se incluyen los Comercios y sus CRPs.;
+Sujeto de la Búsqueda | Son todos los Comercios, CRPs y/o partes relacionadas que se encuentran en la base de datos de PayU. Es la persona natural o jurídica que se consulta en E-Spear.;
+GRID de Moody´s Analytics | Es una herramienta que emplea la clasificación de categorías propias de los PEPs para permitir el filtrado de Comercios y la puntuación de riesgo basada en la posición de este.;
+TPT(Total Payment Transactions) | Se refiere al número total de transacciones de pago realizadas en un determinado periodo. Este término es común en industrias como las finanzas, pagos electrónicos o plataformas de comercio electrónico, y puede incluir transacciones de ventas, pagos de servicios, transferencias, etc.;
+Gross Revenue(Ingresos brutos) | Se refiere al total de los ingresos que una empresa genera antes de deducir cualquier gasto, impuesto o descuento. Es el monto total de dinero que la empresa recibe por la venta de sus productos o servicios.;
+Net Revenue (Ingresos netos) | Son los ingresos totales de una empresa después de deducir ciertos gastos, como descuentos, devoluciones, impuestos, y otros costos relacionados con las ventas.;
+    
+    `;
+
+    // Variable para almacenar los conceptos y descripciones
+    let dictionaryData = [];
+
+    // Función para procesar los datos del archivo (en este caso, desde la variable 'data')
+    function processFileContent() {
+      // Limpiar datos previos
+      dictionaryData = [];
+
+      // Dividir el contenido por líneas
+      const lines = data.trim().split(";");
+
+      lines.forEach(line => {
+        // Limpiar espacios extra y evitar líneas vacías
+        line = line.trim();
+        if (line && line.includes("|")) {
+          const [concept, description] = line.split("|").map(part => part.trim());
+          if (concept && description) {
+            dictionaryData.push({ concept, description });
+          }
+        }
+      });
+    }
+
+    // Función para renderizar la tabla con los datos
+    function renderTable(filteredData) {
+      const tbody = document.getElementById("dictionary");
+      const noResultsMessage = document.getElementById("noResultsMessage");
+      tbody.innerHTML = ""; // Limpiar contenido previo
+
+      // Verificar si los datos fueron cargados correctamente
+      if (filteredData.length === 0) {
+        noResultsMessage.style.display = "block";
+        return;
+      } else {
+        noResultsMessage.style.display = "none";
+      }
+
+      filteredData.forEach(item => {
+        const tr = document.createElement("tr");
+        const tdConcept = document.createElement("td");
+        tdConcept.textContent = item.concept;
+        const tdDescription = document.createElement("td");
+        tdDescription.textContent = item.description;
+        tr.appendChild(tdConcept);
+        tr.appendChild(tdDescription);
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Función para filtrar la tabla según la búsqueda
+    function filterTable() {
+      const searchTerm = document.getElementById("search").value.toLowerCase();
+
+      // Si no se ha cargado aún el diccionario, cargarlo cuando el usuario empieza a escribir
+      if (dictionaryData.length === 0 && searchTerm.trim() !== "") {
+        processFileContent();
+      }
+
+      // Filtrar los datos de acuerdo a lo que escribe el usuario
+      const filteredData = dictionaryData.filter(item => 
+        item.concept.toLowerCase().includes(searchTerm)
+      );
+
+      // Mostrar solo los datos que coinciden con la búsqueda
+      renderTable(filteredData);
+    }
+  </script>
+
+</body>
+</html>
