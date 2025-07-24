@@ -11,20 +11,38 @@
       margin: 0;
       padding: 0;
       background: linear-gradient(135deg, #002124 0%, #F9DD4B 140%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       color: #fff;
       text-align: center;
-      overflow: hidden;
+      min-height: 100vh;
       position: relative;
     }
-    #logo {
-      position: absolute;
+    .logo-top-right {
+      position: fixed;
       top: 20px;
-      left: 20px;
-      width: 120px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .logo-top-right img {
+      width: 110px;
+      height: auto;
+      max-width: 30vw;
+      min-width: 60px;
+      transition: width 0.2s;
+    }
+    @media (max-width: 600px) {
+      .logo-top-right img {
+        width: 70px;
+        min-width: 40px;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding-top: 60px;
+      padding-bottom: 40px;
     }
     h1 {
       font-size: 3rem;
@@ -33,6 +51,7 @@
     input {
       padding: 12px 20px;
       width: 350px;
+      max-width: 90vw;
       font-size: 1.1rem;
       border-radius: 50px;
       margin-bottom: 30px;
@@ -76,7 +95,9 @@
   </style>
 </head>
 <body>
-  <img id="logo" src="PayM2.png" alt="Logo">
+  <div class="logo-top-right">
+    <img src="https://i.postimg.cc/B6HNxR8D/PAYU-GPO-white.png" alt="Logo">
+  </div>
   <div class="content">
     <h1>Interactive Dictionary</h1>
     <input type="text" id="search" placeholder="Here you can search for a concept..." onkeyup="filterTable()">
