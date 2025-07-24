@@ -20,11 +20,16 @@
       overflow: hidden;
       position: relative;
     }
-    #logo {
+    .logo-top-right {
       position: absolute;
       top: 20px;
-      left: 20px;
-      width: 120px;
+      right: 30px;
+      z-index: 10;
+    }
+    .logo-top-right img {
+      width: 90px;
+      height: auto;
+      display: block;
     }
     h1 {
       font-size: 3rem;
@@ -73,14 +78,35 @@
       padding: 20px;
       display: none;
     }
+    @media (max-width: 600px) {
+      .logo-top-right {
+        top: 10px;
+        right: 10px;
+      }
+      .logo-top-right img {
+        width: 60px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      input {
+        width: 90vw;
+        font-size: 1rem;
+      }
+      .table-container {
+        padding: 5px;
+      }
+      th, td {
+        padding: 8px 5px;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="logo-top-right">
-  <img src="PayM2.png" alt="Logo" />
-  <div class="update-info" id="updateInfo"></div>
+    <img src="https://i.postimg.cc/B6HNxR8D/PAYU-GPO-white.png" alt="Logo">
   </div>
-  <img id="logo" src="https://i.postimg.cc/B6HNxR8D/PAYU-GPO-white.png" alt="Logo">
   <div class="content">
     <h1>Interactive Dictionary</h1>
     <input type="text" id="search" placeholder="Here you can search for a concept..." onkeyup="filterTable()">
@@ -120,34 +146,34 @@ GPO (Global Payment Organization) | Global payment organization that includes tw
 AML (Anti-Money Laundering) | Refers to a set of laws, regulations, and procedures designed to prevent money laundering, that is, the process by which illicit funds obtained through criminal activities such as drug trafficking, corruption, or fraud are disguised as legitimate. | Onboarding;
 KPI ( Key Performance Indicator) | It is a quantitative measure used to evaluate a company’s progress toward its goals. | Onboarding;
 Card TPV | Volume of card-based transaction processing | Credit;
-URL (Uniform Resource Locator) | Website or Social Media link for the validation of products and/or services | Onboarding;
+URL (Uniform Resource Locator) | Website or Social Media link for the validation of products and/or services | Onboarding;
 Delivery Policy | Describes the estimated delivery times for the merchant's products or services. | Onboarding;
 Sales Breakdown | A list of all products/services offered by the merchant along with the percentage of sales per category on a monthly basis. | Onboarding;
 MRC | A tool used to evaluate and categorize the level of risk associated with a merchant based on various operational, financial, and compliance-related criteria. | Onboarding;
 MODEL PSP (Payment Service Provider) | A payment model through which PayU enables a merchant to receive payments for online or offline purchases made by its customers, offering multiple payment methods. PayU collects the funds in its own bank accounts and then settles them to the merchant’s bank account. | Onboarding;
-Global Pricing Calculator  | A tool used to estimate pricing scenarios and evaluate applicable fees for a merchant, considering the services requested and processing volumes. | Credit;
-Opportunity Owner  | The commercial representative responsible for managing and following up on the sales opportunity of a particular merchant. | Onboarding;
-Pricing Summary  | A simplified overview of the pricing structure that will be offered to the merchant, including additional notes and context about the commercial proposal. | Onboarding;
-Tiers Template  | A pricing proposal that uses a tiered structure based on transaction volume or other metrics. | Onboarding;
-Payment Channel  | Different channels or instruments offered to merchants to collect payments, including cards, bank transfers, wallets, etc | Onboarding;
-Processing Fee   | A percentage-based charge applied to each transaction processed by PayU. | Onboarding;
-Fixed Fee  | A fixed amount charged to the merchant for each processed transaction. | Onboarding;
-Minimun Fee  | A fixed minimum amount charged per transaction if the sum of the processing and fixed fee is lower than this minimum. | Onboarding;
+Global Pricing Calculator  | A tool used to estimate pricing scenarios and evaluate applicable fees for a merchant, considering the services requested and processing volumes. | Credit;
+Opportunity Owner  | The commercial representative responsible for managing and following up on the sales opportunity of a particular merchant. | Onboarding;
+Pricing Summary  | A simplified overview of the pricing structure that will be offered to the merchant, including additional notes and context about the commercial proposal. | Onboarding;
+Tiers Template  | A pricing proposal that uses a tiered structure based on transaction volume or other metrics. | Onboarding;
+Payment Channel  | Different channels or instruments offered to merchants to collect payments, including cards, bank transfers, wallets, etc | Onboarding;
+Processing Fee   | A percentage-based charge applied to each transaction processed by PayU. | Onboarding;
+Fixed Fee  | A fixed amount charged to the merchant for each processed transaction. | Onboarding;
+Minimun Fee  | A fixed minimum amount charged per transaction if the sum of the processing and fixed fee is lower than this minimum. | Onboarding;
 Admin PayU | An internal system used for setting up and configuring merchant accounts within PayU. | Onboarding;
 Salesforce (SF) | A platform used for managing customer relationships and storing relevant information about merchants, opportunities, and commercial processes. | Onboarding;
 E-Spears | A third-party tool used to verify whether merchants or related parties appear on restricted lists issued by the UN Security Council, the European Union, or OFAC. | Onboarding;
 SharePoint | A document management and collaboration tool used by the Operational Risk team for storing, organizing, and accessing information relevant to merchant evaluation and risk management. | Onboarding;
 Managed Merchant | These are merchants that receive support from the Commercial team during their onboarding process and throughout their commercial relationship with PayU. | Onboarding;
-DDC  | Ongoing Due Diligence | GAFI;
-DDE  | Standard Due Diligence | GAFI;
-DDR  | Enhanced Due Diligence | GAFI;
-DDS  | Simplified Due Diligence | GAFI;
+DDC  | Ongoing Due Diligence | GAFI;
+DDE  | Standard Due Diligence | GAFI;
+DDR  | Enhanced Due Diligence | GAFI;
+DDS  | Simplified Due Diligence | GAFI;
 Black List | A database that includes all merchants that have been rejected. It also contains those merchants that caused financial or reputational damage to the company or whose relationship was terminated due to violations of PayU's internal policies. | Onboarding;
 Related Parties | This includes the legal representative, directors, shareholders, and the UBO of a merchant. | Onboarding;
 Adverse Press | A process to search for negative news or adverse media related to the merchant or its related parties. | Onboarding;
 Alert Subject | The individual or entity queried in E-Spear that results in a match. This includes merchants and their CRP's. | GAFI;
 Search Subject | All merchants, CRPs, and/or related parties found in PayU’s internal database and queried through E-Spear. | GAFI;
-GRID de Moody´s Analytics  | A tool that applies PEP (Politically Exposed Persons) risk categories to filter merchants and score their risk based on their position. | GAFI;
+GRID de Moody´s Analytics  | A tool that applies PEP (Politically Exposed Persons) risk categories to filter merchants and score their risk based on their position. | GAFI;
 TPT(Total Payment Transactions) | The total number of payment transactions processed in a given period. Common in industries such as finance, e-payments, or e-commerce, and may include sales, service payments, transfers, etc. | Onboarding;
 Gross Revenue | The total revenue generated by a company before any deductions like expenses, taxes, or discounts. | Onboarding;
 Net Revenue | The total revenue of a company after deducting expenses such as discounts, returns, taxes, and other sales-related costs. | Onboarding;
@@ -177,22 +203,22 @@ Tax Annex | Annexes required by the Taxes team | Onboarding;
 Tax Framework | Analysis conducted by Catalina or Flavio regarding tax requirements (email) | Onboarding;
 Tax Certificate | Tax certificate corresponding to each country (e.g., RUT, SUNAT, AFIP, SAT, SII, CNPJ) | Onboarding;
 AML Policy | Anti-Money Laundering and Counter-Terrorism Financing Policy (AML/CTF) | Onboarding;
-Articles of Incorporation | Articles of incorporation, incorporation documents corresponding to each country | Onboarding;
-Bank certification | A document issued by a financial institution that confirms the existence of a bank account held by a company or individual. | Onboarding;
-Merchant ´s T&C | Terms and conditions of the merchant to be onboarded | Onboarding;
+Articles of Incorporation | Articles of incorporation, incorporation documents corresponding to each country | Onboarding;
+Bank certification | A document issued by a financial institution that confirms the existence of a bank account held by a company or individual. | Onboarding;
+Merchant ´s T&C | Terms and conditions of the merchant to be onboarded | Onboarding;
 License | Operating or business license (if applicable) | Onboarding;
-Onboarding/Registry form | Onboarding form for Argentina, Colombia, and Mexico | Onboarding;
-Ownership Structure | Document showing the ownership structure of the company, including percentage of shares held by each shareholder. | Onboarding;
-Proof of Address | Document used to confirm the physical address of the business or individual, such as a utility bill or bank statement. | Onboarding;
-Proof of Domain | Document that certifies ownership or the right to use a website domain, such as an annual domain payment invoice. | Onboarding;
-Proof of ID | Includes official identification such as National ID, DNI, or Passport of the individuals involved in the business. | Onboarding;
-Proof Power of Attorney | Legal document that grants authority to an individual to act on behalf of the business, if applicable. | Onboarding;
+Onboarding/Registry form | Onboarding form for Argentina, Colombia, and Mexico | Onboarding;
+Ownership Structure | Document showing the ownership structure of the company, including percentage of shares held by each shareholder. | Onboarding;
+Proof of Address | Document used to confirm the physical address of the business or individual, such as a utility bill or bank statement. | Onboarding;
+Proof of Domain | Document that certifies ownership or the right to use a website domain, such as an annual domain payment invoice. | Onboarding;
+Proof of ID | Includes official identification such as National ID, DNI, or Passport of the individuals involved in the business. | Onboarding;
+Proof Power of Attorney | Legal document that grants authority to an individual to act on behalf of the business, if applicable. | Onboarding;
 Questionaries | Questionnaire required for merchants operating in sectors considered high-risk, to assess specific compliance criteria. | Onboarding;
-Financial Statements/Annual Report | Documents reflecting the merchant’s financial position and operating performance, required for risk and credit analysis. | Onboarding;
-UBO Statement | Official declaration identifying the Ultimate Beneficial Owner(s) of the company, required for compliance with local regulations. | Onboarding;
+Financial Statements/Annual Report | Documents reflecting the merchant’s financial position and operating performance, required for risk and credit analysis. | Onboarding;
+UBO Statement | Official declaration identifying the Ultimate Beneficial Owner(s) of the company, required for compliance with local regulations. | Onboarding;
 Other/Mixed | Any other relevant documents not listed under the predefined document categories. | Onboarding;
 Merchant Risk Matrix MRC | Internal evaluation tool used to determine the risk level of a merchant based on various operational and compliance criteria. | Onboarding;
-Sanction and PEP | Results obtained from the screening process, which may include background checks, watchlist matches, or adverse media findings. | Onboarding;
+Sanction and PEP | Results obtained from the screening process, which may include background checks, watchlist matches, or adverse media findings. | Onboarding;
 Risk Management | It is the Risk Management Team that, operating with integrity, protects and creates value for the business and its stakeholders by identifying and proactively addressing risks and opportunities that are vital to PayU. | GAFI;
 Operational Risk | The team that, operating with integrity, protects and creates value for the business and its stakeholders by proactively identifying and addressing critical risks and opportunities for PayU. | GAFI;
 Merchant | A team within PayU's Operations Division that provides key risk-related services, including merchant validation, follow-up, onboarding review, and anti-fraud transaction monitoring. | GAFI;
@@ -208,7 +234,6 @@ False Positive | Transactions that were declined by the system/analyst but were 
 False Negative | Transactions that were approved by the system/analyst but were proved as fraud. | Fraud;
 True Positive | Transactions detected as fraud correctly. | Fraud;
 True Negative | Transactions approved correctly. | Fraud;
-
     `;
 
     let dictionaryData = [];
